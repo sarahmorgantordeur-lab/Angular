@@ -13,9 +13,7 @@ import { Product } from '../../../../core/models/product.model';
         <h3>{{ product.name | uppercase }}</h3>
         <p>Prix : {{ product.price | currency:'EUR' }}</p>
         <p>Date de sortie : {{ product.releaseDate | date:'mediumDate' }}</p>
-        <p [class.in-stock]="product.inStock" [class.out-of-stock]="!product.inStock">
-          {{ product.inStock ? 'En stock' : 'Rupture de stock' }}
-        </p>
+        <p class='stock-warning' *ngIf="product.inStock">En rupture de stock.</p>
       </div>
     </div>
   `,
@@ -27,8 +25,9 @@ import { Product } from '../../../../core/models/product.model';
       margin: 0.5rem;
       border-radius: 8px;
     }
-    .in-stock { color: green; }
-    .out-of-stock { color: red; }
+    .stock-warning {
+        color: red;
+    }
   `]
 })
 export class ProductListComponent implements OnInit {
