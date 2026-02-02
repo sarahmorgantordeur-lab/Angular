@@ -1,0 +1,6 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <button type="submit">Créer</button>
+</form>
+
+<pre>État du formulaire : {{ productForm.value | json }}</pre>
+<p>Valide ? : {{ productForm.valid }}</p>

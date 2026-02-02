@@ -1,19 +1,12 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-create',
   standalone: true,
-  imports: [ReactiveFormsModule],
-  template: `
-    <div class="product-create-container">
-      <h2>Créer un produit</h2>
-      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-        <!-- Les champs du formulaire seront ajoutés ici -->
-        <button type="submit">Créer</button>
-      </form>
-    </div>
-  `,
+  imports: [ReactiveFormsModule, JsonPipe],
+  templateUrl: "./product-create.component.html",
   styles: [`
     .product-create-container {
       padding: 1rem;
@@ -38,10 +31,19 @@ export class ProductCreateComponent {
   productForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    this.productForm = this.fb.group({});
+    this.productForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      price: [0, [Validators.required, Validators.min(0)]],
+      releaseDate: ['', [Validators.required]],
+      inStock: [true]
+    });
   }
 
   onSubmit(): void {
-    console.log('Formulaire soumis:', this.productForm.value);
+    if (this.productForm.valid) {
+      console.log('Formulaire soumis:', this.productForm.value);
+    } else {
+      console.log('Formulaire invalide');
+    }
   }
 }
