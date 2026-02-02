@@ -18,7 +18,10 @@ import { ProductCardComponent } from '../product-card/ProductCardComponent';
       </div>
       
       <h2>Liste des produits</h2>
-      <div class="product-list">
+      <div class='product-list' *ngIf="products.length===0">
+        <p>Aucun produit disponible pour le moment</p>
+      </div>
+      <div class="product-list" *ngIf="products.length!==0">
         <app-product-card
           *ngFor="let product of products"
           [product]="product"
