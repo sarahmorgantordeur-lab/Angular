@@ -18,8 +18,17 @@ import { UserCardComponent } from '../user-card/UserCardComponent';
       <div class="user-list">
         <app-user-card
           *ngFor="let user of users"
-          [user]="user"
-          (userSelected)="handleUserSelection($event)">
+          [userData]="user"
+          (notifyParent)="handleUserSelection($event)">
+        </app-user-card>
+      </div>
+
+      <h2>Équipe Projet</h2>
+      <div class="user-list">
+        <app-user-card
+          *ngFor="let user of users"
+          [userData]="user"
+          (notifyParent)="onUserReceived($event)">
         </app-user-card>
       </div>
     </div>
@@ -44,13 +53,17 @@ import { UserCardComponent } from '../user-card/UserCardComponent';
 export class UserListComponent {
   // Tableau statique d'utilisateurs
   users: User[] = [
-    { id: 1, name: 'Alice Dupont', email: 'alice@example.com', role: 'Admin' },
-    { id: 2, name: 'Bob Martin', email: 'bob@example.com', role: 'User' },
-    { id: 3, name: 'Claire Durand', email: 'claire@example.com', role: 'Guest', bio: 'Nouvelle utilisatrice' }
+    { id: 1, name: 'Alice Dupont', role: 'Admin', isActive: true },
+    { id: 2, name: 'Bob Martin', role: 'Dev', isActive: true },
+    { id: 3, name: 'Claire Durand', role: 'Manager', isActive: true }
   ];
 
   // Variable pour stocker l'utilisateur sélectionné
   selectedUser: User | null = null;
+
+  onUserReceived(user: User): void {
+    console.log('Utilisateur reçu :', user);
+  }
 
   // Méthode appelée lors de la sélection d'un utilisateur
   handleUserSelection(user: User): void {

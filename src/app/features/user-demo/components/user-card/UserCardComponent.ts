@@ -5,10 +5,12 @@ import { User } from '../../../../core/models/user.model';
   selector: 'app-user-card',
   standalone: true,
   template: `
-    <div class="user-card" (click)="onCardClick()">
-      <h3>{{ user.name }}</h3>
-      <p>Rôle : {{ user.role }}</p>
-      <button (click)="onSelect($event)">Sélectionner l'utilisateur</button>
+    <div class="user-card">
+      <h3>{{ userData.name }}</h3>
+      <p>ID : {{ userData.id }}</p>
+      <p>Rôle : {{ userData.role }}</p>
+      <p>Statut : {{ userData.isActive ? 'Actif' : 'Inactif' }}</p>
+      <button (click)="onPromote()">Promouvoir</button>
     </div>
   `,
   styles: [`
@@ -32,15 +34,10 @@ import { User } from '../../../../core/models/user.model';
   `]
 })
 export class UserCardComponent {
-  @Input() user!: User;
-  @Output() userSelected = new EventEmitter<User>();
+  @Input() userData!: User;
+  @Output() notifyParent = new EventEmitter<User>();
 
-  onCardClick(): void {
-    console.log('Utilisateur cliqué :', this.user.name);
-  }
-
-  onSelect(event: Event): void {
-    event.stopPropagation(); // Empêche le clic de remonter à la div parente
-    this.userSelected.emit(this.user);
+  onPromote(): void {
+    this.notifyParent.emit(this.userData);
   }
 }
