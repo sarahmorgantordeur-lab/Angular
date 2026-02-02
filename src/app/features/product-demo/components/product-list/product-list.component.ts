@@ -1,29 +1,49 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../../../core/models/product.model';
+import { ProductCardComponent } from '../product-card/ProductCardComponent';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ProductCardComponent],
   template: `
-    <div class="product-list">
+
+
+
+    <div class="product-list-container">
+      <div *ngIf='selectedProduct' class='selected-product'>
+        <h3>Produit sélectionné :</h3>
+          <p><strong>{{ selectedProduct.name }}</strong> - {{ selectedProduct.price }}</p>
+      </div>
+      
       <h2>Liste des produits</h2>
-      <div *ngFor="let product of products" class="product-card">
-        <h3>{{ product.name | uppercase }}</h3>
-        <p>Prix : {{ product.price | currency:'EUR' }}</p>
-        <p>Date de sortie : {{ product.releaseDate | date:'mediumDate' }}</p>
-        <p class='stock-warning' *ngIf="product.inStock">En rupture de stock.</p>
+      <div class="product-list">
+        <app-product-card
+          *ngFor="let product of products"
+          [product]="product"
+          (selectedProduct)="handleProductSelection($event)">
+        </app-product-card>
       </div>
     </div>
   `,
   styles: [`
-    .product-list { padding: 1rem; }
-    .product-card {
+    .product-list {
       border: 1px solid #ccc;
       padding: 1rem;
       margin: 0.5rem;
       border-radius: 8px;
+      padding: 1rem;
+    }
+    .product-list-container {
+      padding: 1rem;
+    }
+    .selected-product {
+      background-color: #e8f5e9;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border: 2px solid #4caf50;
     }
     .stock-warning {
         color: red;
@@ -41,4 +61,11 @@ export class ProductListComponent implements OnInit {
       { id: 4, name: 'Laptop', price: 1829.99, releaseDate: new Date('2025-12-01'), inStock: false },
     ];
   }
+
+  selectedProduct: Product | null = null;
+
+  handleProductSelection(product: Product): void {
+      this.selectedProduct = product;
+      console.log('Utilisateur sélectionné :', product);
+    }
 }

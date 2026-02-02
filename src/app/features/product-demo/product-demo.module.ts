@@ -11,8 +11,10 @@ import { ProductCardComponent } from './components/product-card/ProductCardCompo
     ProductListComponent
   ],
   exports: [
-    ProductListComponent,
-    ProductCardComponent
+    ProductListComponent
   ]
 })
 export class ProductDemoModule { }
+
+
+

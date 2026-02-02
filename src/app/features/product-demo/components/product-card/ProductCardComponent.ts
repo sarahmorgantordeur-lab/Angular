@@ -33,7 +33,7 @@ import { Product } from '../../../../core/models/product.model';
 })
 export class ProductCardComponent {
   @Input() product!: Product;
-  @Output() productSelected = new EventEmitter<Product>();
+  @Output() selectedProduct = new EventEmitter<Product>();
 
   onCardClick(): void {
     console.log('Produit cliqué :', this.product.name);
@@ -41,6 +41,6 @@ export class ProductCardComponent {
 
   onSelect(event: Event): void {
     event.stopPropagation(); // Empêche le clic de remonter à la div parente
-    this.productSelected.emit(this.product);
+    this.selectedProduct.emit(this.product);
   }
 }

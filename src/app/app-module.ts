@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { UserDemoModule } from './features/user-demo/user-demo.module';
+import { ProductDemoModule } from './features/product-demo/product-demo.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { UserDemoModule } from './features/user-demo/user-demo.module';
     BrowserModule,
     AppRoutingModule,
     HeaderComponent,
-    UserDemoModule
+    UserDemoModule,
+    ProductDemoModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
