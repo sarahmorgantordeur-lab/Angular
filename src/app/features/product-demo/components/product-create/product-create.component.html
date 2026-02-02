@@ -1,4 +1,42 @@
 <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <input
+        type="text"
+        id="name"
+        formControlName="name"
+        placeholder="Nom"
+        [ngClass]="{
+            'invalid': name?.invalid && (name?.dirty || name?.touched),
+            'valid': name?.valid && (name?.dirty || name?.touched)
+        }">
+
+    <input
+        type="number"
+        id="price"
+        formControlName="price"
+        placeholder="Prix"
+        [ngClass]="{
+            'invalid': price?.invalid && (price?.dirty || price?.touched),
+            'valid': price?.valid && (price?.dirty || price?.touched)
+        }">
+
+    <input
+        type="date"
+        id="releaseDate"
+        formControlName="releaseDate"
+        placeholder="Date de création"
+        [ngClass]="{
+            'invalid': releaseDate?.invalid && (releaseDate?.dirty || releaseDate?.touched),
+            'valid': releaseDate?.valid && (releaseDate?.dirty || releaseDate?.touched)
+        }">
+
+    <label>
+        <input
+            type="checkbox"
+            id="inStock"
+            formControlName="inStock">
+        En stock
+    </label>
+
     <button type="submit">Créer</button>
 </form>
 
