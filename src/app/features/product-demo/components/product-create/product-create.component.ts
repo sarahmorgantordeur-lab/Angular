@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-product-create',
@@ -74,7 +75,7 @@ import { CommonModule } from '@angular/common';
 export class ProductCreateComponent {
   productForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private productService: ProductService) {
     this.productForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       price: [0, [Validators.required, Validators.min(0)]],
@@ -98,7 +99,16 @@ export class ProductCreateComponent {
 
   onSubmit(): void {
     if (this.productForm.valid) {
-      console.log('Formulaire soumis:', this.productForm.value);
+      const formValue = this.productForm.value;
+      const newProduct = {
+        name: formValue.name,
+        price: formValue.price,
+        releaseDate: new Date(formValue.releaseDate),
+        inStock: formValue.inStock
+      };
+      this.productService.addProduct(newProduct);
+      console.log('Produit ajouté:', newProduct);
+      this.productForm.reset({ inStock: true });
     } else {
       console.log('Formulaire invalide');
     }

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 import { Product } from '../../../../core/models/product.model';
 import { ProductCardComponent } from '../product-card/ProductCardComponent';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-product-list',
@@ -64,19 +66,22 @@ import { ProductCardComponent } from '../product-card/ProductCardComponent';
     }
   `]
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
+  selectedProduct: Product | null = null;
+  private subscription!: Subscription;
+
+  constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
-    this.products = [
-      { id: 1, name: 'Super Widget', price: 19.99, releaseDate: new Date(), inStock: true },
-      { id: 2, name: 'Gadget Pro', price: 299.50, releaseDate: new Date('2024-12-01'), inStock: false },
-      { id: 3, name: 'Ear phone', price: 149.99, releaseDate: new Date(), inStock: true },
-      { id: 4, name: 'Laptop', price: 1829.99, releaseDate: new Date('2025-12-01'), inStock: false },
-    ];
+    this.subscription = this.productService.products$.subscribe(products => {
+      this.products = products;
+    });
   }
 
-  selectedProduct: Product | null = null;
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   handleProductSelection(product: Product): void {
     this.selectedProduct = product;
