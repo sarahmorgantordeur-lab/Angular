@@ -6,9 +6,9 @@ import { Product } from '../../../../core/models/product.model';
   standalone: true,
   template: `
     <div class="product-card" [class.out-of-stock]="!product.inStock" (click)="onCardClick()">
-      <h3>{{ product.name }}</h3>
-      <p>Prix : {{ product.price }}</p>
-      <button (click)="onSelect($event)">Sélectionner le produit</button>
+        <h3>{{ product.name }}</h3>
+        <p>Prix : {{ product.price }}</p>
+        <ng-content></ng-content>
     </div>
   `,
   styles: [`
@@ -17,14 +17,6 @@ import { Product } from '../../../../core/models/product.model';
       padding: 1rem;
       border-radius: 8px;
       margin: 0.5rem;
-    }
-    button {
-      background-color: #3f51b5;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
     }
     button:hover {
       background-color: #303f9f;

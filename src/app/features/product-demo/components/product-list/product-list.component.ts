@@ -26,6 +26,9 @@ import { ProductCardComponent } from '../product-card/ProductCardComponent';
           *ngFor="let product of products"
           [product]="product"
           (selectedProduct)="handleProductSelection($event)">
+          <div class="actions">
+            <button (click)="onSelect(product)" [disabled]="!product.inStock" #btn>{{ btn.disabled ? 'Indisponible' : 'Sélectionner' }}</button>
+          </div>
         </app-product-card>
       </div>
     </div>
@@ -51,6 +54,14 @@ import { ProductCardComponent } from '../product-card/ProductCardComponent';
     .stock-warning {
         color: red;
     }
+    button {
+      background-color: #3f51b5;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
   `]
 })
 export class ProductListComponent implements OnInit {
@@ -68,7 +79,12 @@ export class ProductListComponent implements OnInit {
   selectedProduct: Product | null = null;
 
   handleProductSelection(product: Product): void {
-      this.selectedProduct = product;
-      console.log('Utilisateur sélectionné :', product);
-    }
+    this.selectedProduct = product;
+    console.log('Utilisateur sélectionné :', product);
+  }
+
+  onSelect(product: Product): void {
+    this.selectedProduct = product;
+    console.log('Produit sélectionné :', product.name);
+  }
 }
