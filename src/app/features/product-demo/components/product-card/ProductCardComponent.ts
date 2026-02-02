@@ -5,7 +5,7 @@ import { Product } from '../../../../core/models/product.model';
   selector: 'app-product-card',
   standalone: true,
   template: `
-    <div class="product-card" (click)="onCardClick()">
+    <div class="product-card" [class.out-of-stock]="!product.inStock" (click)="onCardClick()">
       <h3>{{ product.name }}</h3>
       <p>Prix : {{ product.price }}</p>
       <button (click)="onSelect($event)">Sélectionner le produit</button>
@@ -28,6 +28,10 @@ import { Product } from '../../../../core/models/product.model';
     }
     button:hover {
       background-color: #303f9f;
+    }
+    .out-of-stock {
+        opacity: 0.6;
+        background-color: #f5f5f5;
     }
   `]
 })
