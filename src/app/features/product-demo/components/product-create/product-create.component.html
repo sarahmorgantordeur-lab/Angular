@@ -8,6 +8,14 @@
             'invalid': name?.invalid && (name?.dirty || name?.touched),
             'valid': name?.valid && (name?.dirty || name?.touched)
         }">
+    <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="error-message">
+        <span *ngIf="name?.hasError('required')">
+            Ce champ est requis.
+        </span>
+        <span *ngIf="name?.hasError('minlength')">
+            Le nom doit faire au moins 3 caractères.
+        </span>
+    </div>
 
     <input
         type="number"
@@ -18,6 +26,14 @@
             'invalid': price?.invalid && (price?.dirty || price?.touched),
             'valid': price?.valid && (price?.dirty || price?.touched)
         }">
+    <div *ngIf="price?.invalid && (price?.dirty || price?.touched)" class="error-message">
+        <span *ngIf="price?.hasError('required')">
+            Le prix est requis.
+        </span>
+        <span *ngIf="price?.hasError('min')">
+            Le prix doit être positif ou nul.
+        </span>
+    </div>
 
     <input
         type="date"
@@ -37,7 +53,11 @@
         En stock
     </label>
 
-    <button type="submit">Créer</button>
+    <button 
+        type="submit" 
+        [disabled]="productForm.invalid">
+            Créer le produit
+    </button>
 </form>
 
 <pre>État du formulaire : {{ productForm.value | json }}</pre>

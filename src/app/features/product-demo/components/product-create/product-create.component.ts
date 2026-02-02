@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { JsonPipe, NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product-create',
   standalone: true,
-  imports: [ReactiveFormsModule, JsonPipe, NgClass],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: "./product-create.component.html",
   styles: [`
     .product-create-container {
@@ -36,16 +36,23 @@ import { JsonPipe, NgClass } from '@angular/common';
       border-color: #4caf50;
     }
     button {
-      background-color: #3f51b5;
+      background-color: #4caf50;
       color: white;
       border: none;
-      padding: 0.5rem 1rem;
+      padding: 0.75rem 1.5rem;
       border-radius: 4px;
       cursor: pointer;
       margin-top: 1rem;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
     }
-    button:hover {
-      background-color: #303f9f;
+    button:hover:not(:disabled) {
+      background-color: #388e3c;
+    }
+    button:disabled {
+      background-color: #9e9e9e;
+      cursor: not-allowed;
+      opacity: 0.7;
     }
     label {
       display: flex;
@@ -55,6 +62,12 @@ import { JsonPipe, NgClass } from '@angular/common';
     }
     label input[type="checkbox"] {
       width: auto;
+    }
+    .error-message {
+      color: #f44336;
+      font-size: 0.75rem;
+      margin-top: -0.25rem;
+      margin-bottom: 0.5rem;
     }
   `]
 })
