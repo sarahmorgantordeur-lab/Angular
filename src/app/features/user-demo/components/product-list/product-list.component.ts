@@ -10,9 +10,9 @@ import { Product } from '../../../../core/models/product.model';
     <div class="product-list">
       <h2>Liste des produits</h2>
       <div *ngFor="let product of products" class="product-card">
-        <h3>{{ product.name }}</h3>
+        <h3>{{ product.name | uppercase }}</h3>
         <p>Prix : {{ product.price | currency:'EUR' }}</p>
-        <p>Date de sortie : {{ product.releaseDate | date:'dd/MM/yyyy' }}</p>
+        <p>Date de sortie : {{ product.releaseDate | date:'mediumDate' }}</p>
         <p [class.in-stock]="product.inStock" [class.out-of-stock]="!product.inStock">
           {{ product.inStock ? 'En stock' : 'Rupture de stock' }}
         </p>
